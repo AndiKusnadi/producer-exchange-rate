@@ -1,7 +1,9 @@
 package bni.co.id.producer.exchange_rate.service;
 
 import bni.co.id.producer.exchange_rate.config.ApplicationProperties;
+import bni.co.id.producer.exchange_rate.util.GeneralFacility;
 import bni.co.id.producer.exchange_rate.vo.CurrencyVO;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,12 +18,24 @@ public class GrabDataService {
     @Autowired
     private ApplicationProperties applicationProperties;
 
-    public void grabDataCurrency(){
+    @Autowired
+    private KafkaProducer kafkaProducer;
+
+    @Autowired
+    private GeneralFacility generalFacility;
+
+    public void grabDataCurrency() {
         System.out.println(this.applicationProperties.getCurrencyRateUrl());
         System.out.println(this.applicationProperties.getCurrencyRateApiKey());
-        log.info("aaaeee"  + this.applicationProperties.getCurrencyRateUrl());
+        log.info("aaaeee" + this.applicationProperties.getCurrencyRateUrl());
         String url = this.applicationProperties.getCurrencyRateUrl() + this.applicationProperties.getCurrencyRateApiKey();
         CurrencyVO currencyVO = this.restTemplate.getForObject(url, CurrencyVO.class);
+        try {
+            String currencyStr = this.generalFacility.getObjectMapper().writeValueAsString(currencyVO);
+            this.kafkaProducer.sendMessage(this.applicationProperties.getTopicExchangeRate(), this.applicationProperties.getTopicExchangeRateGroupId(), currencyStr);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 

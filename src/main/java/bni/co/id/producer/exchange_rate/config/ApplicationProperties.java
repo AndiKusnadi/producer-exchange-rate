@@ -13,4 +13,10 @@ public class ApplicationProperties {
     private String currencyRateUrl;
     @Value("${currency.rate.api.key}")
     private String currencyRateApiKey;
+
+    @Value("${topic.exchange.rate}")
+    private String topicExchangeRate;
+
+    @Value("${topic.exchange.rate.group.id}")
+    private String topicExchangeRateGroupId;
 }
