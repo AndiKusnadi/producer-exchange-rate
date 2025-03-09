@@ -1,0 +1,1 @@
+alter table "BACKOFFICE"."TRANSACTION_RATE" add rate number(17, 16);
