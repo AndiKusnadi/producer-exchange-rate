@@ -29,6 +29,7 @@ dependencies {
 	implementation("org.springframework.kafka:spring-kafka")
 	implementation("org.flywaydb:flyway-core:11.3.2")
 	runtimeOnly("org.flywaydb:flyway-database-oracle:11.3.2")
+	runtimeOnly("org.postgresql:postgresql")
 
 	compileOnly("org.projectlombok:lombok")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
