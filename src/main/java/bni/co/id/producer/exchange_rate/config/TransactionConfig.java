@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-@EnableJpaRepositories(basePackages = "com.fxdx.enterprise.accounting.repository")
+@EnableJpaRepositories(basePackages = "bni.co.id.producer.exchange_rate.repository")
 @EnableTransactionManagement
 @Slf4j
 public class TransactionConfig {
